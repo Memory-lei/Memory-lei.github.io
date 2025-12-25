@@ -60,7 +60,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2025-12-25 12:23:38',
+  postUpdate: '2025-12-25 12:33:04',
   postMainColor: '',
 }</script><noscript><style type="text/css">
   #nav {
@@ -190,40 +190,36 @@
       }
       detectApple()
     })(window)</script><style>
+  /* 手机端适配：屏幕宽度小于768px时生效 */
   @media (max-width: 768px) {
-    /* 1. 强制显示所有分类按钮（解决“成长”按钮消失问题） */
-    .categoryGroup {
-      display: flex !important;
-      flex-wrap: wrap !important;  /* 分类按钮自动换行，不被挤掉 */
-      justify-content: center !important;
-      gap: 10px !important;
-      margin: 15px 0 !important;
+    /* 顶部模块内边距调整 */
+    #home_top {
+      padding: 10px 0 !important;
     }
+    /* 分类按钮文字和图标大小调整 */
+    .categoryButtonText {
+      font-size: 14px !important;
+    }
+    .anzhiyufont {
+      font-size: 16px !important;
+    }
+    /* 随便逛逛按钮样式优化 */
+    #random-hover {
+      padding: 8px 16px !important;
+      font-size: 14px !important;
+    }
+    /* 标题区域间距缩小 */
+    .banners-title {
+      padding: 10px 0 !important;
+    }
+  }
+  /* 超小屏（手机竖屏）适配 */
+  @media (max-width: 480px) {
     .categoryItem {
-      display: block !important;  /* 强制显示每个分类按钮 */
-      flex: none !important;
-      width: 120px !important;  /* 固定按钮宽度，避免挤压 */
+      min-width: 100px !important;
     }
-
-    /* 2. 强制显示所有内容模块（避免被主题隐藏） */
-    .recent-post-item, .post-group, .site-statistics {
-      display: block !important;
-      opacity: 1 !important;
-      height: auto !important;
-      overflow: visible !important;
-    }
-
-    /* 3. 修复父容器隐藏问题（确保所有内容不被截断） */
-    #home, #page, .main-content {
-      overflow: visible !important;
-      height: auto !important;
-      min-height: auto !important;
-    }
-
-    /* 4. 调整内容间距，避免重叠 */
-    * {
-      margin: 0 !important;
-      margin-bottom: 10px !important;
+    .banners-title-big {
+      font-size: 20px !important;
     }
   }
 </style>
