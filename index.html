@@ -5,7 +5,7 @@
   diytitle: {"enable":true,"leaveTitle":"常来看看","backTitle":"♪(^∇^*)"},
   LA51: undefined,
   greetingBox: {"enable":true,"default":"bro～ 解锁今日份快乐呀✨","list":[{"greeting":"熬夜冠军请止步🌙✨，星星都睡了，你也该休息啦～","startTime":0,"endTime":5},{"greeting":"早！被阳光叫醒的一天☕️，来杯咖啡开启元气模式～","startTime":6,"endTime":9},{"greeting":"上午进度25%📈，摸鱼不如搞事业，冲就完事了！","startTime":10,"endTime":10},{"greeting":"干饭预警🚨！距离干饭时间不足1小时，准备冲食堂/外卖～","startTime":11,"endTime":11},{"greeting":"午安充电中🔋，小憩15分钟=下午2小时高效输出！","startTime":12,"endTime":14},{"greeting":"下午摸鱼时刻🐟，累了就看看我的博客充充电呀～","startTime":14,"endTime":18},{"greeting":"下班/放学撒欢儿🍻！今天的努力值得一顿美食奖励～","startTime":19,"endTime":19},{"greeting":"夜晚专属放松模式🌌，刷博客、听音乐，做自己喜欢的事～","startTime":20,"endTime":24}]},
-  twikooEnvId: 'cloud1-7g7yJf2oc4fe4574',
+  twikooEnvId: 'https://twikoo-silk-six.vercel.app/',
   commentBarrageConfig:undefined,
   music_page_default: "nav_music",
   root: '/',
@@ -60,7 +60,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2025-12-26 22:52:31',
+  postUpdate: '2025-12-27 13:09:34',
   postMainColor: '',
 }</script><noscript><style type="text/css">
   #nav {
@@ -374,7 +374,7 @@ queueMicrotask(() => {
     updateHtml();
   }, 1000);
 })();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="anzhiyu"></div><script>window.addEventListener('load', () => {
-  const changeContent = content => {
+  const changeContent = (content) => {
     if (content === '') return content
 
     content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
@@ -388,6 +388,39 @@ queueMicrotask(() => {
     return content
   }
 
+  const getComment = () => {
+    const runTwikoo = () => {
+      twikoo.getRecentComments({
+        envId: 'https://twikoo-silk-six.vercel.app/',
+        region: 'ap-shanghai',
+        pageSize: 6,
+        includeReply: true
+      }).then(function (res) {
+        const twikooArray = res.map(e => {
+          return {
+            'content': changeContent(e.comment),
+            'avatar': e.avatar,
+            'nick': e.nick,
+            'url': e.url + '#' + e.id,
+            'date': new Date(e.created).toISOString()
+          }
+        })
+
+        saveToLocal.set('twikoo-newest-comments', JSON.stringify(twikooArray), 10/(60*24))
+        generateHtml(twikooArray)
+      }).catch(function (err) {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+    }
+
+    if (typeof twikoo === 'object') {
+      runTwikoo()
+    } else {
+      getScript('https://cdn.cbd.int/twikoo@1.6.44/dist/twikoo.all.min.js').then(runTwikoo)
+    }
+  }
+
   const generateHtml = array => {
     let result = ''
 
@@ -397,13 +430,13 @@ queueMicrotask(() => {
 
         if (true) {
           const name = 'data-lazy-src'
-          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'><div class='name'><span>${array[i].nick} </span></div></a>`
         }
-
+        
         result += `<div class='content'>
         <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
-        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${anzhiyu.diffDate(array[i].date, true)}</time></div>
-        </div></div>`
+        <time datetime="${array[i].date}">${anzhiyu.diffDate(array[i].date, true)}</time></div>
+        </div>`
       }
     } else {
       result += '没有评论'
@@ -415,31 +448,9 @@ queueMicrotask(() => {
     window.pjax && window.pjax.refresh($dom)
   }
 
-  const getComment = async () => {
-    try {
-      const res = await fetch('https://waline-api-eight.vercel.app/api/comment?type=recent&count=6', { method: 'GET' })
-      const result = await res.json()
-      const walineArray = result.data.map(e => {
-        return {
-          'content': changeContent(e.comment),
-          'avatar': e.avatar,
-          'nick': e.nick,
-          'url': e.url + '#' + e.objectId,
-          'date': e.time || e.insertedAt
-        }
-      })
-      saveToLocal.set('waline-newest-comments', JSON.stringify(walineArray), 10/(60*24))
-      generateHtml(walineArray)
-    } catch (err) {
-      console.error(err)
-      const $dom = document.querySelector('#card-newest-comments .aside-list')
-      $dom.textContent= "无法获取评论，请确认相关配置是否正确"
-    }
-  }
-
   const newestCommentInit = () => {
     if (document.querySelector('#card-newest-comments .aside-list')) {
-      const data = saveToLocal.get('waline-newest-comments')
+      const data = saveToLocal.get('twikoo-newest-comments')
       if (data) {
         generateHtml(JSON.parse(data))
       } else {
@@ -451,7 +462,7 @@ queueMicrotask(() => {
   newestCommentInit()
   document.addEventListener('pjax:complete', newestCommentInit)
 })</script><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
-</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:type\"]","meta[property=\"og:site_name\"]","meta[property=\"og:description\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 var pjax = new Pjax({
   elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
   selectors: pjaxSelectors,
