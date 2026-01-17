@@ -24935,6 +24935,326 @@ div#swiper_container:hover {
   color: var(--anzhiyu-white);
 }
 
+/* 移动端优化样式 */
+
+/* 基础移动端适配 */
+@media screen and (max-width: 768px) {
+
+    /* 整体布局优化 */
+    #content-inner {
+        padding: 0 10px !important;
+        margin: 0 !important;
+    }
+
+    /* 文章内容区域 */
+    #article-container {
+        padding: 15px !important;
+        margin: 10px 0 !important;
+        border-radius: 12px !important;
+    }
+
+    /* 侧边栏移动端优化 */
+    #aside-content {
+        padding: 0 15px 15px !important;
+        margin-top: 0 !important;
+    }
+
+    #aside-content .card-widget {
+        margin-top: 15px !important;
+        padding: 15px 18px !important;
+        border-radius: 12px !important;
+    }
+
+    /* 评论区域优化 */
+    #post-comment {
+        padding: 15px !important;
+        margin: 15px 0 !important;
+        border-radius: 12px !important;
+    }
+
+    /* Twikoo 评论系统移动端优化 */
+    .twikoo {
+        padding: 0 !important;
+    }
+
+    .twikoo .tk-comments-container {
+        padding: 0 !important;
+    }
+
+    .twikoo .tk-submit {
+        padding: 10px !important;
+    }
+
+    .twikoo .tk-input {
+        font-size: 16px !important;
+        /* 防止iOS缩放 */
+        padding: 12px !important;
+        border-radius: 8px !important;
+    }
+
+    .twikoo .tk-send {
+        padding: 8px 16px !important;
+        border-radius: 6px !important;
+    }
+
+    /* 头部导航优化 */
+    #nav {
+        padding: 0 15px !important;
+    }
+
+    /* 首页顶部区域 */
+    #page-header {
+        padding: 0 15px !important;
+    }
+
+    /* 文章列表优化 */
+    #recent-posts>.recent-post-item {
+        margin: 15px 0 !important;
+        padding: 15px !important;
+        border-radius: 12px !important;
+    }
+
+    /* 分页导航 */
+    #pagination {
+        padding: 0 15px !important;
+        margin: 20px 0 !important;
+    }
+
+    /* 底部工具栏优化 */
+    #rightside {
+        right: 15px !important;
+        bottom: 20px !important;
+    }
+
+    #rightside>div {
+        margin-bottom: 8px !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    /* 音乐播放器移动端优化 */
+    .aplayer {
+        margin: 10px 0 !important;
+        border-radius: 8px !important;
+    }
+
+    .aplayer.aplayer-narrow {
+        width: 100% !important;
+    }
+
+    /* 标签云优化 */
+    .card-tag-cloud a {
+        margin: 3px 2px !important;
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+        border-radius: 6px !important;
+    }
+
+    /* 归档页面优化 */
+    .archive-timeline {
+        padding: 0 15px !important;
+    }
+
+    /* 搜索框优化 */
+    .local-search-box input {
+        font-size: 16px !important;
+        /* 防止iOS缩放 */
+        padding: 12px 15px !important;
+        border-radius: 8px !important;
+    }
+
+    /* 代码块优化 */
+    figure.highlight {
+        margin: 15px 0 !important;
+        border-radius: 8px !important;
+    }
+
+    figure.highlight pre {
+        padding: 15px !important;
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+    }
+
+    /* 表格优化 */
+    .table-wrap {
+        overflow-x: auto !important;
+        margin: 15px 0 !important;
+    }
+
+    table {
+        font-size: 13px !important;
+        min-width: 100% !important;
+    }
+
+    /* 图片优化 */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 8px !important;
+    }
+
+    /* 按钮组优化 */
+    .btns {
+        margin: 15px 0 !important;
+    }
+
+    .btns .btn {
+        margin: 5px 3px !important;
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        border-radius: 6px !important;
+    }
+}
+
+/* 超小屏幕优化 (小于480px) */
+@media screen and (max-width: 480px) {
+    #content-inner {
+        padding: 0 8px !important;
+    }
+
+    #article-container {
+        padding: 12px !important;
+        margin: 8px 0 !important;
+    }
+
+    #aside-content .card-widget {
+        padding: 12px 15px !important;
+    }
+
+    .recent-post-item {
+        padding: 12px !important;
+    }
+
+    /* 更小的字体 */
+    body {
+        font-size: 14px !important;
+    }
+
+    h1 {
+        font-size: 1.5em !important;
+    }
+
+    h2 {
+        font-size: 1.3em !important;
+    }
+
+    h3 {
+        font-size: 1.2em !important;
+    }
+
+    h4 {
+        font-size: 1.1em !important;
+    }
+
+    /* 右侧工具栏更小 */
+    #rightside>div {
+        width: 35px !important;
+        height: 35px !important;
+    }
+}
+
+/* 横屏模式优化 */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    #page-header {
+        height: auto !important;
+        min-height: 300px !important;
+    }
+
+    #rightside {
+        right: 10px !important;
+        bottom: 10px !important;
+    }
+}
+
+/* 修复评论区域在移动端的显示问题 */
+@media screen and (max-width: 768px) {
+
+    /* 评论输入框优化 */
+    .twikoo .tk-input textarea {
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+        padding: 12px !important;
+        border-radius: 8px !important;
+        resize: vertical !important;
+        min-height: 80px !important;
+    }
+
+    /* 评论列表优化 */
+    .twikoo .tk-comment {
+        padding: 12px !important;
+        margin: 10px 0 !important;
+        border-radius: 8px !important;
+    }
+
+    .twikoo .tk-avatar {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 50% !important;
+    }
+
+    .twikoo .tk-content {
+        margin-left: 40px !important;
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+    }
+
+    /* 评论操作按钮 */
+    .twikoo .tk-actions {
+        margin-top: 8px !important;
+    }
+
+    .twikoo .tk-action-icon {
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+    }
+
+    /* 表情面板优化 */
+    .twikoo .OwO {
+        font-size: 14px !important;
+    }
+
+    .twikoo .OwO .OwO-body {
+        max-height: 200px !important;
+        overflow-y: auto !important;
+    }
+}
+
+/* 深色模式下的移动端优化 */
+[data-theme="dark"] {
+    @media screen and (max-width: 768px) {
+        #article-container {
+            background: var(--anzhiyu-card-bg) !important;
+            border: 1px solid var(--anzhiyu-card-border) !important;
+        }
+
+        .twikoo .tk-input textarea {
+            background: var(--anzhiyu-card-bg) !important;
+            color: var(--anzhiyu-fontcolor) !important;
+            border: 1px solid var(--anzhiyu-card-border) !important;
+        }
+    }
+}
+
+/* 修复移动端菜单 */
+@media screen and (max-width: 768px) {
+    #sidebar-menus {
+        width: 280px !important;
+        right: -280px !important;
+    }
+
+    #sidebar-menus.open {
+        right: 0 !important;
+    }
+
+    .sidebar-menu-item {
+        padding: 0 12px !important;
+    }
+
+    .back-menu-item {
+        font-size: 13px !important;
+        padding: 6px 10px !important;
+    }
+}
 b, strong {
   color: var(--anzhiyu-lighttext);
 }
